@@ -1,4 +1,4 @@
-class ServiceResponse
+class ServicePattern::ServiceResponse
   attr_reader :errors, :result
 
   def initialize(args)

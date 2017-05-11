@@ -2,7 +2,7 @@ class ServicePattern::ServiceResponse
   attr_reader :errors, :result
 
   def initialize(args)
-    @errors = args[:errors]
+    @errors = args[:errors] || []
     @result = args[:result]
 
     if args.key?(:success)

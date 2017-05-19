@@ -3,14 +3,27 @@ class ServicePattern::Service
     service = new(*args)
 
     begin
-      return service.execute!
+      can_execute_response = service.can_execute?
+
+      puts "can_execute_response: #{can_execute_response.success?} (#{can_execute_response.errors})"
+
+      return can_execute_response unless can_execute_response.success?
+      service.execute!
     rescue => e
-      ServicePattern::ServiceResponse.new(errors: ["#{e.class.name}: #{e.message}"], success: false)
+      ServicePattern::Response.new(errors: ["#{e.class.name}: #{e.message}"], success: false)
     end
   end
 
   def self.execute!(*args)
-    new(*args).execute!
+    service = new(*args)
+
+    can_execute_response = service.can_execute?
+    raise ServicePattern::CantExecuteError, can_execute_response.errors.join(". ") unless can_execute_response.success?
+    service.execute!
+  end
+
+  def can_execute?
+    ServicePattern::Response.new(success: true)
   end
 
   def execute!(*_args)

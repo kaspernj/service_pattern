@@ -4,9 +4,6 @@ class ServicePattern::Service
 
     begin
       can_execute_response = service.can_execute?
-
-      puts "can_execute_response: #{can_execute_response.success?} (#{can_execute_response.errors})"
-
       return can_execute_response unless can_execute_response.success?
       service.execute!
     rescue => e

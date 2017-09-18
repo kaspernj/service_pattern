@@ -39,5 +39,18 @@ else
 end
 ```
 
+### Returning results
+
+You can also return a result, which will automatically make the response successfull:
+```ruby
+ServicePattern::Response.new(result: {message: "Hello world"})
+```
+
+You can then retrieve it like this:
+```ruby
+response = Users::ActivatorService.()
+puts "Result: #{response.result}"
+```
+
 ## License
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).

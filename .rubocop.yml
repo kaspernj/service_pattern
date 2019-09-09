@@ -9,6 +9,9 @@ AllCops:
 Style/FileName:
   Enabled: false
 
+Metrics/BlockLength:
+  Enabled: false
+
 Metrics/LineLength:
   Max: 160
 
@@ -34,6 +37,9 @@ Style/Documentation:
   Enabled: false
 
 Style/EmptyLines:
+  Enabled: false
+
+Style/LambdaCall:
   Enabled: false
 
 Style/StringLiterals:

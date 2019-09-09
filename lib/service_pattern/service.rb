@@ -1,4 +1,9 @@
 class ServicePattern::Service
+  # The same as execute but doesn't catch FailedError so they are passed on to the parent service call
+  def self.chain(*args, &blk)
+    new(*args, &blk).execute
+  end
+
   def self.call(*args)
     new(*args).execute
   end
@@ -10,6 +15,8 @@ class ServicePattern::Service
     return can_execute_response unless can_execute_response.success?
 
     service.execute
+  rescue ServicePattern::FailedError => e
+    ServicePattern::Response.new(errors: [e.message])
   end
 
   def self.execute!(*args, &blk)

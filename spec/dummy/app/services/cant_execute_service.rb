@@ -4,7 +4,7 @@ class CantExecuteService < ServicePattern::Service
     ServicePattern::Response.new(success: true)
   end
 
-  def execute!
+  def execute
     ServicePattern::Response.new(errors: ["shouldnt execute"])
   end
 end

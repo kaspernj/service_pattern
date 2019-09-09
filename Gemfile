@@ -19,4 +19,5 @@ group :development, :test do
   gem "rspec-rails", "3.6.0"
   gem "rubocop", "0.48.1", require: false
   gem "sqlite3", "1.3.13"
+  gem "tzinfo-data", require: false
 end

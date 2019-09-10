@@ -21,7 +21,7 @@ end
 Create your first service in "app/services/users/activator_service":
 ```ruby
 class Users::ActivatorService < ApplicationService
-  def execute!
+  def execute
     User.all.find_each(&:activate!)
     ServicePattern::Response.new(success: true)
   end

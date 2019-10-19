@@ -36,6 +36,6 @@ class ServicePattern::Service
   end
 
   def execute(*_args)
-    raise NoMethodError, "You should implement the `execute!` method on your service"
+    raise NoMethodError, "You should implement the `execute` method on your service"
   end
 end

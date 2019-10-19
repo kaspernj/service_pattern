@@ -21,6 +21,6 @@ group :development, :test do
   gem "rubocop-performance", require: false
   gem "rubocop-rails", require: false
   gem "rubocop-rspec", require: false
-  gem "sqlite3", "1.3.13"
+  gem "sqlite3", "1.4.1"
   gem "tzinfo-data", require: false
 end

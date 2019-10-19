@@ -16,7 +16,7 @@ gemspec
 group :development, :test do
   gem "best_practice_project", "0.0.10", require: false
   gem "rails", ">= 4.0.0"
-  gem "rspec-rails", "3.6.0"
+  gem "rspec-rails", "3.9.0"
   gem "rubocop", "0.48.1", require: false
   gem "sqlite3", "1.3.13"
   gem "tzinfo-data", require: false

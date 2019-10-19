@@ -14,7 +14,7 @@ gemspec
 # gem 'byebug', group: [:development, :test]
 
 group :development, :test do
-  gem "best_practice_project", "0.0.9", require: false
+  gem "best_practice_project", "0.0.10", require: false
   gem "rails", ">= 4.0.0"
   gem "rspec-rails", "3.6.0"
   gem "rubocop", "0.48.1", require: false

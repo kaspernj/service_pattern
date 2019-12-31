@@ -23,7 +23,7 @@ Create your first service in "app/services/users/activator_service":
 class Users::ActivatorService < ApplicationService
   def execute
     User.all.find_each(&:activate!)
-    ServicePattern::Response.new(success: true)
+    succeed!
   end
 end
 ```
@@ -33,23 +33,51 @@ Then call it like this:
 response = Users::ActivatorService.()
 
 if response.success?
-  puts "Wee"
+  puts "Result: #{response.result}"
 else
-  puts "Errors: #{result.errors.join(". ")}"
+  puts "Errors: #{response.errors.join(". ")}"
 end
+```
+
+Or like this:
+```ruby
+response = Users::ActivatorService.execute()
+
+if response.success?
+  puts "Result: #{response.result}"
+else
+  puts "Errors: #{response.errors.join(". ")}"
+end
+```
+
+Or raise an error if it fails and return the result directly:
+```ruby
+result = Users::ActivatorService.execute!
+
+puts "Result: #{result}"
 ```
 
 ### Returning results
 
 You can also return a result, which will automatically make the response successfull:
 ```ruby
-ServicePattern::Response.new(result: {message: "Hello world"})
+succeed!(message: "Hello world")
 ```
 
 You can then retrieve it like this:
 ```ruby
 response = Users::ActivatorService.()
 puts "Result: #{response.result}"
+```
+
+You can fail a service like this
+```ruby
+fail! "Hello world"
+```
+
+Or with multiple errors:
+```ruby
+fail! ["Hello world", "Hello again"]
 ```
 
 ## License

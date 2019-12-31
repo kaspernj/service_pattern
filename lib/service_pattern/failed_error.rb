@@ -1,1 +1,3 @@
-class ServicePattern::FailedError < RuntimeError; end
+class ServicePattern::FailedError < RuntimeError
+  attr_accessor :errors
+end

@@ -23,6 +23,11 @@ describe ServicePattern::Service do
     expect(response.errors).to eq []
   end
 
+  it "succeeds even if the result is empty" do
+    response = TestService.execute(empty_result: true)
+    expect(response.success?).to eq true
+  end
+
   it "fails on execute" do
     response = TestService.execute(should_fail_on_execute: true)
 
@@ -33,7 +38,7 @@ describe ServicePattern::Service do
   it "fails when a chained failing service fails" do
     response = TestService.execute(chained_failing_service: true)
 
-    expect(response.success?).to eq false
     expect(response.errors).to eq ["Chained fail"]
+    expect(response.success?).to eq false
   end
 end

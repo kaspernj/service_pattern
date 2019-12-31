@@ -1,19 +1,10 @@
 class ServicePattern::Response
   attr_reader :errors, :result
 
-  def initialize(args)
-    @errors = args[:errors] || []
-    @result = args[:result]
-
-    if args.key?(:success)
-      @success = args.fetch(:success)
-    elsif args.key?(:errors) && @errors.any?
-      @success = false
-    elsif @result
-      @success = true
-    else
-      raise "Couldn't figure out if it was a success"
-    end
+  def initialize(errors: [], result: nil)
+    @errors = errors
+    @result = result
+    @success = !errors || errors.empty?
   end
 
   def success?

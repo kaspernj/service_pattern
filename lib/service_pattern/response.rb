@@ -4,7 +4,7 @@ class ServicePattern::Response
   def initialize(errors: [], result: nil)
     @errors = errors
     @result = result
-    @success = !errors || errors.empty?
+    @success = errors.blank?
   end
 
   def success?

@@ -7,7 +7,6 @@ AllCops:
 
 require:
   - rubocop-performance
-  - rubocop-rails
   - rubocop-rspec
 
 Layout/AccessModifierIndentation:
@@ -60,10 +59,6 @@ Metrics/MethodLength:
 
 Metrics/PerceivedComplexity:
   Max: 10
-
-# .find_each is not the same as .each
-Rails/FindEach:
-  Enabled: false
 
 RSpec/AnyInstance:
   Enabled: false

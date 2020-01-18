@@ -17,7 +17,7 @@ describe ServicePattern::Service do
       error = nil
       begin
         FailService.execute!
-      rescue => e
+      rescue => e # rubocop:disable Style/RescueStandardError
         error = e
       end
 

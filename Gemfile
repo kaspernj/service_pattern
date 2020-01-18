@@ -15,6 +15,7 @@ gemspec
 
 group :development, :test do
   gem "best_practice_project", require: false
+  gem "pry"
   gem "rails", ">= 4.0.0"
   gem "rspec-rails"
   gem "rubocop", require: false

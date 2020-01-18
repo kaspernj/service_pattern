@@ -10,9 +10,19 @@ describe ServicePattern::Service do
     end
 
     it "raises an exception when calling execute!" do
-      expect do
-        CantExecuteService.execute!
-      end.to raise_error(ServicePattern::FailedError)
+      expect { CantExecuteService.execute! }.to raise_error(ServicePattern::FailedError)
+    end
+
+    it "includes a usable stack trace" do
+      error = nil
+      begin
+        FailService.execute!
+      rescue => e # rubocop:disable Style/RescueStandardError
+        error = e
+      end
+
+      match = error.backtrace.select { |trace| trace.include?("spec/dummy/app/services/fail_service.rb") }
+      expect(match.length).to eq 1
     end
   end
 

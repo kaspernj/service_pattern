@@ -50,9 +50,9 @@ describe ServicePattern::Service do
       begin
         service_class.execute!
         raise "Didn't expect to reach this"
-      rescue ServicePattern::FailedError => error
-        expect(error.error_messages).to eq ["Test"]
-        expect(error.error_types).to eq [:custom_type]
+      rescue ServicePattern::FailedError => e
+        expect(e.error_messages).to eq ["Test"]
+        expect(e.error_types).to eq [:custom_type]
       end
     end
   end

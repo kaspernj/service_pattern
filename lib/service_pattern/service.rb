@@ -42,7 +42,7 @@ class ServicePattern::Service
 
     error_messages = errors.map(&:message)
 
-    error =  ServicePattern::FailedError.new(error_messages.join(". "))
+    error = ServicePattern::FailedError.new(error_messages.join(". "))
     error.errors = errors
 
     raise error

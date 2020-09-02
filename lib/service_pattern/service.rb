@@ -35,8 +35,16 @@ class ServicePattern::Service
 
   def self.fail!(errors)
     errors = [errors] unless errors.is_a?(Array)
-    error =  ServicePattern::FailedError.new(errors.join(". "))
+    errors = errors.map do |error|
+      error = ServicePattern::FailError.new(message: error) unless error.is_a?(ServicePattern::FailError)
+      error
+    end
+
+    error_messages = errors.map(&:message)
+
+    error = ServicePattern::FailedError.new(error_messages.join(". "))
     error.errors = errors
+
     raise error
   end
 
@@ -48,7 +56,9 @@ class ServicePattern::Service
     raise NoMethodError, "You should implement the `execute` method on your service"
   end
 
-  def fail!(errors)
+  def fail!(errors, type: nil)
+    errors = [ServicePattern::FailError.new(message: errors, type: type)] if type
+
     ServicePattern::Service.fail!(errors)
   end
 

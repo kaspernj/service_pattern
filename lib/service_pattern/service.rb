@@ -34,7 +34,7 @@ class ServicePattern::Service
   end
 
   def self.fail!(errors)
-    errors = [errors] unless errors.is_a?(Array)
+    errors = [errors] unless errors.is_a?(Array) # rubocop:disable Style/ArrayCoercion
     error =  ServicePattern::FailedError.new(errors.join(". "))
     error.errors = errors
     raise error

@@ -4,6 +4,7 @@ AllCops:
   Exclude:
     - db/schema.rb
     - spec/dummy/db/schema.rb
+  NewCops: enable
 
 require:
   - rubocop-performance
@@ -41,6 +42,9 @@ Layout/ParameterAlignment:
 
 Layout/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
+
+Lint/MissingSuper:
+  Enabled: false
 
 Metrics/AbcSize:
   Max: 25

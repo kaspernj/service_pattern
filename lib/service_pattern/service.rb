@@ -33,13 +33,16 @@ class ServicePattern::Service
     response.result
   end
 
-  def self.fail!(errors)
+  def self.convert_errors(errors)
     errors = [errors] unless errors.is_a?(Array)
-    errors = errors.map do |error|
+    errors.map do |error|
       error = ServicePattern::FailError.new(message: error) unless error.is_a?(ServicePattern::FailError)
       error
     end
+  end
 
+  def self.fail!(errors)
+    errors = convert_errors(errors)
     error_messages = errors.map(&:message)
 
     error = ServicePattern::FailedError.new(error_messages.join(". "))

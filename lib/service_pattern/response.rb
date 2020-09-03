@@ -2,7 +2,7 @@ class ServicePattern::Response
   attr_reader :errors, :result
 
   def initialize(errors: [], result: nil)
-    @errors = errors
+    @errors = ServicePattern::Service.convert_errors(errors)
     @result = result
     @success = !errors || errors.empty?
   end

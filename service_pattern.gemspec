@@ -13,6 +13,7 @@ Gem::Specification.new do |s|
   s.summary     = "ServicePattern for Ruby on Rails."
   s.description = "ServicePattern for Ruby on Rails."
   s.license     = "MIT"
+  s.required_ruby_version = ">= 2.5.0"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 end

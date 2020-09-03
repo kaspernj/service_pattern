@@ -6,7 +6,7 @@ describe ServicePattern::Service do
       response = CantExecuteService.()
 
       expect(response.success?).to eq false
-      expect(response.errors).to eq ["can execute false"]
+      expect(response.error_messages).to eq ["can execute false"]
     end
 
     it "raises an exception when calling execute!" do

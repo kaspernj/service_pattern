@@ -34,7 +34,7 @@ class ServicePattern::Service
   end
 
   def self.convert_errors(errors)
-    errors = [errors] unless errors.is_a?(Array) # rubocop:disable Style/ArrayCoercion
+    errors = [errors] unless errors.is_a?(Array)
     errors.map do |error|
       error = ServicePattern::FailError.new(message: error) unless error.is_a?(ServicePattern::FailError)
       error

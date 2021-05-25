@@ -84,4 +84,15 @@ describe ServicePattern::Service do
     expect(response.error_types).to eq []
     expect(response.success?).to eq false
   end
+
+  describe "#execute" do
+    it "fails on execute" do
+      service = TestService.new(should_fail_on_execute: true)
+      response = service.execute
+
+      expect(response.success?).to eq false
+      expect(response.error_messages).to eq ["should fail on execute"]
+      expect(response.error_types).to eq []
+    end
+  end
 end

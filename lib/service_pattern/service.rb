@@ -6,7 +6,7 @@ class ServicePattern::Service
     can_execute_response = service.can_execute?
     ServicePattern::Service.fail!(can_execute_response.errors) unless can_execute_response.success?
 
-    service.execute
+    service.perform
   end
 
   def self.call(*args, &blk)
@@ -15,20 +15,14 @@ class ServicePattern::Service
 
   def self.execute(*args, &blk)
     service = new(*args, &blk)
-
-    can_execute_response = service.can_execute?
-    return can_execute_response unless can_execute_response.success?
-
     service.execute
-  rescue ServicePattern::FailedError => e
-    ServicePattern::Response.new(errors: e.errors)
   end
 
   def self.execute!(*args, &blk)
     service = new(*args, &blk)
     can_execute_response = service.can_execute?
     ServicePattern::Service.fail!(can_execute_response.errors) unless can_execute_response.success?
-    response = service.execute
+    response = service.perform
     ServicePattern::Service.fail!(response.errors) unless response.success?
     response.result
   end
@@ -55,8 +49,17 @@ class ServicePattern::Service
     succeed!
   end
 
-  def execute(*_args)
-    raise NoMethodError, "You should implement the `execute` method on your service"
+  def execute
+    can_execute_response = can_execute?
+    return can_execute_response unless can_execute_response.success?
+
+    perform
+  rescue ServicePattern::FailedError => e
+    ServicePattern::Response.new(errors: e.errors)
+  end
+
+  def perform(*_args)
+    raise NoMethodError, "You should implement the `perform` method on your service"
   end
 
   def fail!(errors, type: nil)

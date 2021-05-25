@@ -1,5 +1,5 @@
 class ChainedFailingService < ServicePattern::Service
-  def execute
+  def perform
     fail! "Chained fail"
   end
 end

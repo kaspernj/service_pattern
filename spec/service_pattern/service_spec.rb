@@ -29,7 +29,7 @@ describe ServicePattern::Service do
   describe "#fail!" do
     it "fails with a message and a type" do
       service_class = Class.new(ServicePattern::Service) do
-        def execute
+        def perform
           fail! "Test", type: :custom_type
         end
       end
@@ -42,7 +42,7 @@ describe ServicePattern::Service do
 
     it "fails with a message and a type through a raise error" do
       service_class = Class.new(ServicePattern::Service) do
-        def execute
+        def perform
           fail! "Test", type: :custom_type
         end
       end

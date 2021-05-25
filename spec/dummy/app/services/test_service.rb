@@ -7,7 +7,7 @@ class TestService < ServicePattern::Service
     @should_fail_on_execute = should_fail_on_execute
   end
 
-  def execute
+  def perform
     return ChainedFailingService.chain if chained_failing_service
 
     fail! "should fail on execute" if should_fail_on_execute

@@ -1,5 +1,5 @@
 class FailService < ServicePattern::Service
-  def execute
+  def perform
     fail! "Test error"
   end
 end

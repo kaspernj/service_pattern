@@ -29,7 +29,7 @@ describe ServicePattern::Service do
   describe "#fail!" do
     it "fails with a message and a type" do
       service_class = Class.new(ServicePattern::Service) do
-        def execute
+        def perform
           fail! "Test", type: :custom_type
         end
       end
@@ -42,7 +42,7 @@ describe ServicePattern::Service do
 
     it "fails with a message and a type through a raise error" do
       service_class = Class.new(ServicePattern::Service) do
-        def execute
+        def perform
           fail! "Test", type: :custom_type
         end
       end
@@ -83,5 +83,16 @@ describe ServicePattern::Service do
     expect(response.error_messages).to eq ["Chained fail"]
     expect(response.error_types).to eq []
     expect(response.success?).to eq false
+  end
+
+  describe "#execute" do
+    it "fails on execute" do
+      service = TestService.new(should_fail_on_execute: true)
+      response = service.execute
+
+      expect(response.success?).to eq false
+      expect(response.error_messages).to eq ["should fail on execute"]
+      expect(response.error_types).to eq []
+    end
   end
 end

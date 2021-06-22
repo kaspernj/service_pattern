@@ -14,17 +14,11 @@ class ServicePattern::Service
   end
 
   def self.execute(*args, &blk)
-    service = new(*args, &blk)
-    service.execute
+    new(*args, &blk).execute
   end
 
   def self.execute!(*args, &blk)
-    service = new(*args, &blk)
-    can_execute_response = service.can_execute?
-    ServicePattern::Service.fail!(can_execute_response.errors) unless can_execute_response.success?
-    response = service.perform
-    ServicePattern::Service.fail!(response.errors) unless response.success?
-    response.result
+    new(*args, &blk).execute!
   end
 
   def self.convert_errors(errors)
@@ -56,6 +50,14 @@ class ServicePattern::Service
     perform
   rescue ServicePattern::FailedError => e
     ServicePattern::Response.new(errors: e.errors)
+  end
+
+  def execute!
+    can_execute_response = can_execute?
+    ServicePattern::Service.fail!(can_execute_response.errors) unless can_execute_response.success?
+    response = perform
+    ServicePattern::Service.fail!(response.errors) unless response.success?
+    response.result
   end
 
   def perform(*_args)

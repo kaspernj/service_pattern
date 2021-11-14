@@ -52,6 +52,11 @@ else
 end
 ```
 
+Raise a normal service error unless error is of a specific type.
+```ruby
+response.raise_error! unless response.only_error_type?(:custom_error)
+```
+
 Or raise an error if it fails and return the result directly:
 ```ruby
 result = Users::ActivatorService.execute!

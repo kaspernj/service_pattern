@@ -23,6 +23,13 @@ class ServicePattern::Response
     error_types.length == 1 && error_type?(type)
   end
 
+  def raise_error!
+    error = ServicePattern::FailedError.new(error_messages.join(". "))
+    error.errors = errors
+
+    raise error
+  end
+
   def success?
     @success
   end

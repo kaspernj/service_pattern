@@ -66,6 +66,9 @@ describe ServicePattern::Service do
 
     expect(response.success?).to eq true
     expect(response.errors).to eq []
+    expect(response.error_type?(:custom_error)).to eq false
+    expect(response.only_error_type?(:custom_error)).to eq false
+    expect { response.raise_error! }.not_to raise_error
   end
 
   it "succeeds even if the result is empty" do

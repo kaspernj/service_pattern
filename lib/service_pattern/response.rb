@@ -24,6 +24,8 @@ class ServicePattern::Response
   end
 
   def raise_error!
+    return if errors.empty?
+
     error = ServicePattern::FailedError.new(error_messages.join(". "))
     error.errors = errors
 

@@ -35,7 +35,7 @@ response = Users::ActivatorService.()
 if response.success?
   puts "Result: #{response.result}"
 else
-  puts "Errors: #{response.errors.join(". ")}"
+  puts "Errors: #{response.error_messages.join(". ")}"
 end
 ```
 
@@ -46,7 +46,9 @@ response = Users::ActivatorService.execute()
 if response.success?
   puts "Result: #{response.result}"
 else
-  puts "Errors: #{response.errors.join(". ")}"
+  puts "Errors: #{response.error_messages.join(". ")}"
+  puts "Custom error? #{response.error_type?(:custom_error) ? "Yes" : "No"}"
+  puts "Only custom error? #{response.only_error_type?(:custom_error) ? "Yes" : "No"}"
 end
 ```
 
@@ -78,6 +80,11 @@ fail! "Hello world"
 Or with multiple errors:
 ```ruby
 fail! ["Hello world", "Hello again"]
+```
+
+Or with error types:
+```ruby
+fail! "Hello world", type: :message
 ```
 
 ## License

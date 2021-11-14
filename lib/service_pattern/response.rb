@@ -15,6 +15,14 @@ class ServicePattern::Response
     @error_types ||= @errors.map(&:type).reject(&:blank?)
   end
 
+  def error_type?(type)
+    error_types.include?(type)
+  end
+
+  def only_error_type?(type)
+    error_types.length == 1 && error_type?(type)
+  end
+
   def success?
     @success
   end

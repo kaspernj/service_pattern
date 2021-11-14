@@ -38,6 +38,9 @@ describe ServicePattern::Service do
 
       expect(response.error_messages).to eq ["Test"]
       expect(response.error_types).to eq [:custom_type]
+      expect(response.error_type?(:custom_type)).to eq true
+      expect(response.error_type?(:another_type)).to eq false
+      expect(response.only_error_type?(:another_type)).to eq false
     end
 
     it "fails with a message and a type through a raise error" do

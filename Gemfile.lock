@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    service_pattern (1.0.3)
+    service_pattern (1.0.4)
 
 GEM
   remote: https://rubygems.org/

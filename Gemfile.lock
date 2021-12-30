@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    service_pattern (1.0.4)
+    service_pattern (1.0.5)
 
 GEM
   remote: https://rubygems.org/
@@ -205,4 +205,4 @@ DEPENDENCIES
   tzinfo-data
 
 BUNDLED WITH
-   2.2.28
+   2.2.32

@@ -13,6 +13,8 @@ builds:
     script:
       - bundle exec rspec
   build_3:
+    environment:
+      RUBY_VERSION: 2.7.4
     name: Linters
     script:
       - bundle exec rake best_practice_project:run

@@ -1,18 +1,32 @@
 rvm: true
+before_script:
+  - bundle exec appraisal bundle
 builds:
   build_1:
     environment:
       RUBY_VERSION: 2.7.4
-    name: Ruby 2.7.4
+    name: Ruby 2.7.4, Rails 6
     script:
-      - bundle exec rspec
+      - bundle exec appraisal rails6 rspec
   build_2:
     environment:
-      RUBY_VERSION: 3.0.3
-    name: Ruby 3.0.3
+      RUBY_VERSION: 2.7.4
+    name: Ruby 2.7.4, Rails 7
     script:
-      - bundle exec rspec
+      - bundle exec appraisal rails7 rspec
   build_3:
+    environment:
+      RUBY_VERSION: 3.0.3
+    name: Ruby 3.0.3, Rails 6
+    script:
+      - bundle exec appraisal rails6 rspec
+  build_4:
+    environment:
+      RUBY_VERSION: 3.0.3
+    name: Ruby 3.0.3, Rails 7
+    script:
+      - bundle exec appraisal rails7 rspec
+  build_5:
     name: Linters
     script:
       - bundle exec rake best_practice_project:run

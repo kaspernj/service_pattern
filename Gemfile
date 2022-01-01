@@ -9,18 +9,3 @@ gemspec
 # your gemspec. These might include edge Rails or gems from your path or
 # Git. Remember to move these dependencies to your gemspec before releasing
 # your gem to rubygems.org.
-
-# To use a debugger
-# gem 'byebug', group: [:development, :test]
-
-group :development, :test do
-  gem "best_practice_project", require: false
-  gem "pry"
-  gem "rails", ">= 4.0.0"
-  gem "rspec-rails"
-  gem "rubocop", require: false
-  gem "rubocop-performance", require: false
-  gem "rubocop-rspec", require: false
-  gem "sqlite3"
-  gem "tzinfo-data", require: false
-end

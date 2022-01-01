@@ -14,6 +14,16 @@ Gem::Specification.new do |s|
   s.description = "ServicePattern for Ruby on Rails."
   s.license     = "MIT"
   s.required_ruby_version = ">= 2.7.0"
-
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
+
+  s.add_development_dependency "appraisal"
+  s.add_development_dependency "best_practice_project"
+  s.add_development_dependency "pry"
+  s.add_development_dependency "rails", ">= 6.0.0"
+  s.add_development_dependency "rspec-rails"
+  s.add_development_dependency "rubocop"
+  s.add_development_dependency "rubocop-performance"
+  s.add_development_dependency "rubocop-rspec"
+  s.add_development_dependency "sqlite3"
+  s.add_development_dependency "tzinfo-data"
 end

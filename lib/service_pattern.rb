@@ -1,4 +1,6 @@
 module ServicePattern
+  class InvalidResponseError < RuntimeError; end
+
   path = "#{File.dirname(__FILE__)}/service_pattern"
 
   autoload :FailError, "#{path}/fail_error"

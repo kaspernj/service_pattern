@@ -1,6 +1,12 @@
 class ServicePattern::Response
   attr_reader :errors, :result
 
+  def self.check_response!(service, response)
+    return if response.is_a?(ServicePattern::Response)
+
+    raise ServicePattern::InvalidResponseError, "Expected a ServicePattern::Response from #{service.class.name} but it was instead: #{response.class.name}"
+  end
+
   def initialize(errors: [], result: nil)
     @errors = ServicePattern::Service.convert_errors(errors)
     @result = result

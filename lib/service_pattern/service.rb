@@ -48,7 +48,7 @@ class ServicePattern::Service
     return can_execute_response unless can_execute_response.success?
 
     response = perform
-    ServicePattern::Response.check_response!(response)
+    ServicePattern::Response.check_response!(self, response)
     response
   rescue ServicePattern::FailedError => e
     ServicePattern::Response.new(errors: e.errors)
@@ -58,7 +58,7 @@ class ServicePattern::Service
     can_execute_response = can_execute?
     ServicePattern::Service.fail!(can_execute_response.errors) unless can_execute_response.success?
     response = perform
-    ServicePattern::Response.check_response!(response)
+    ServicePattern::Response.check_response!(self, response)
     ServicePattern::Service.fail!(response.errors) unless response.success?
     response.result
   end

@@ -48,7 +48,7 @@ class ServicePattern::Service
   def self.argument(argument_name, **args)
     attr_accessor argument_name
 
-    @arguments ||= {} # rubocop:disable Style/ClassVars
+    @arguments ||= {}
     @arguments[argument_name] ||= {}
 
     args.each do |key, value|
@@ -63,9 +63,7 @@ class ServicePattern::Service
   def initialize(**args)
     arguments = self.class.instance_variable_get(:@arguments)
     arguments&.each do |argument_name, argument_options|
-      if !args.key?(argument_name) && !argument_options.key?(:default)
-        raise ArgumentError, "missing keyword: #{argument_name}"
-      end
+      raise ArgumentError, "missing keyword: #{argument_name}" if !args.key?(argument_name) && !argument_options.key?(:default)
     end
 
     args.each do |key, value|

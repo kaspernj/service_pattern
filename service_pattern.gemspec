@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "appraisal"
   s.add_development_dependency "best_practice_project"
-  s.add_development_dependency "pry"
+  s.add_development_dependency "pry-rails"
   s.add_development_dependency "rails", ">= 6.0.0"
   s.add_development_dependency "rspec-rails"
   s.add_development_dependency "rubocop"

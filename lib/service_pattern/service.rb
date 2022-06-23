@@ -39,6 +39,27 @@ class ServicePattern::Service
     raise error
   end
 
+  def self.arguments(*arguments)
+    arguments.each do |argument_name|
+      argument argument_name
+    end
+  end
+
+  def self.argument(argument_name, default: nil)
+    attr_accessor argument_name
+
+    @@arguments ||= {}
+    @@arguments[argument_name] ||= {default: default}
+  end
+
+  def initialize(**args)
+    args.each do |key, value|
+      raise ArgumentError, "No such argument: #{key}" unless @@arguments.key?(key)
+
+      __send__("#{key}=", value)
+    end
+  end
+
   def can_execute?
     succeed!
   end

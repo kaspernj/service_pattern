@@ -39,6 +39,40 @@ class ServicePattern::Service
     raise error
   end
 
+  def self.arguments(*arguments)
+    arguments.each do |argument_name|
+      argument argument_name
+    end
+  end
+
+  def self.argument(argument_name, **args)
+    attr_accessor argument_name
+
+    @arguments ||= {}
+    @arguments[argument_name] ||= {}
+
+    args.each do |key, value|
+      if key == :default
+        @arguments[argument_name][key] = value
+      else
+        raise ArgumentError, "Invalid argument: #{argument_name}"
+      end
+    end
+  end
+
+  def initialize(**args)
+    arguments = self.class.instance_variable_get(:@arguments)
+    arguments&.each do |argument_name, argument_options|
+      raise ArgumentError, "missing keyword: #{argument_name}" if !args.key?(argument_name) && !argument_options.key?(:default)
+    end
+
+    args.each do |key, value|
+      raise ArgumentError, "unknown keyword: #{key}" unless arguments&.key?(key)
+
+      __send__("#{key}=", value)
+    end
+  end
+
   def can_execute?
     succeed!
   end

@@ -45,18 +45,31 @@ class ServicePattern::Service
     end
   end
 
-  def self.argument(argument_name, default: nil)
+  def self.argument(argument_name, **args)
     attr_accessor argument_name
 
-    @@arguments ||= {} # rubocop:disable Style/ClassVars
-    @@arguments[argument_name] ||= {default: default}
+    @arguments ||= {} # rubocop:disable Style/ClassVars
+    @arguments[argument_name] ||= {}
+
+    args.each do |key, value|
+      if key == :default
+        @arguments[argument_name][key] = value
+      else
+        raise ArgumentError, "Invalid argument: #{argument_name}"
+      end
+    end
   end
 
   def initialize(**args)
-    @@arguments ||= {} # rubocop:disable Style/ClassVars
+    arguments = self.class.instance_variable_get(:@arguments)
+    arguments&.each do |argument_name, argument_options|
+      if !args.key?(argument_name) && !argument_options.key?(:default)
+        raise ArgumentError, "missing keyword: #{argument_name}"
+      end
+    end
 
     args.each do |key, value|
-      raise ArgumentError, "No such argument: #{key}" unless @@arguments.key?(key)
+      raise ArgumentError, "unknown keyword: #{key}" unless arguments&.key?(key)
 
       __send__("#{key}=", value)
     end

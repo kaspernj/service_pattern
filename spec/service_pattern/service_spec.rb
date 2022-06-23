@@ -1,6 +1,22 @@
 require "rails_helper"
 
 describe ServicePattern::Service do
+  describe "#arguments" do
+    it "complains about missing arguments" do
+      expect { ArgumentService.new(optional_argument: "Christina") }
+        .to raise_error(ArgumentError, "missing keyword: required_argument")
+    end
+
+    it "complains about wrong arguments" do
+      expect do
+        ArgumentService.new(
+          required_argument: "Christina",
+          first_name: "Kasper"
+        )
+      end.to raise_error(ArgumentError, "unknown keyword: first_name")
+    end
+  end
+
   describe "#can_execute?" do
     it "doesnt succeed when calling" do
       response = CantExecuteService.()

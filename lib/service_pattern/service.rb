@@ -48,11 +48,13 @@ class ServicePattern::Service
   def self.argument(argument_name, default: nil)
     attr_accessor argument_name
 
-    @@arguments ||= {}
+    @@arguments ||= {} # rubocop:disable Style/ClassVars
     @@arguments[argument_name] ||= {default: default}
   end
 
   def initialize(**args)
+    @@arguments ||= {} # rubocop:disable Style/ClassVars
+
     args.each do |key, value|
       raise ArgumentError, "No such argument: #{key}" unless @@arguments.key?(key)
 

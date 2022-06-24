@@ -63,7 +63,13 @@ class ServicePattern::Service
   def initialize(**args)
     arguments = self.class.instance_variable_get(:@arguments)
     arguments&.each do |argument_name, argument_options|
-      raise ArgumentError, "missing keyword: #{argument_name}" if !args.key?(argument_name) && !argument_options.key?(:default)
+      next if args.key?(argument_name)
+
+      if argument_options.key?(:default)
+        __send__("#{argument_name}=", argument_options.fetch(:default))
+      else
+        raise ArgumentError, "missing keyword: #{argument_name}"
+      end
     end
 
     args.each do |key, value|

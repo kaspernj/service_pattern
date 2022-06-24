@@ -15,6 +15,11 @@ describe ServicePattern::Service do
         )
       end.to raise_error(ArgumentError, "unknown keyword: first_name")
     end
+
+    it "sets default on initialize" do
+      service = ArgumentService.new(required_argument: "Christina")
+      expect(service).to have_attributes(optional_argument: "Kasper")
+    end
   end
 
   describe "#can_execute?" do

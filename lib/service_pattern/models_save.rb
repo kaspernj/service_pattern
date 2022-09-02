@@ -1,4 +1,4 @@
-class ServicePattern::ModelsSave
+class ServicePattern::ModelsSave < ServicePattern::Service
   attr_reader :models, :simple_model_errors
 
   def initialize(models:, simple_model_errors: false)
@@ -24,5 +24,6 @@ class ServicePattern::ModelsSave
     end
 
     fail! errors.uniq if errors.any?
+    succeed!
   end
 end

@@ -142,4 +142,18 @@ describe ServicePattern::Service do
       expect(result).to eq nil
     end
   end
+
+  describe "#save_models_or_fail" do
+    it "fails with validation errors" do
+      service_class = Class.new(ServicePattern::Service) do
+        def perform
+          task = Task.new(name: " ")
+          save_models_or_fail task
+        end
+      end
+
+      expect { service_class.execute! }
+        .to raise_error(ServicePattern::FailedError, "Name can't be blank")
+    end
+  end
 end

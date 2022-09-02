@@ -113,6 +113,10 @@ class ServicePattern::Service
     ServicePattern::Service.fail!(errors)
   end
 
+  def save_models_or_fail(*models, simple_model_errors: false)
+    ServicePattern::ModelsSave.execute!(models: models, simple_model_errors: simple_model_errors)
+  end
+
   def succeed!(result = nil)
     ServicePattern::Response.new(result: result)
   end

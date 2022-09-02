@@ -5,6 +5,8 @@ module ServicePattern
 
   autoload :FailError, "#{path}/fail_error"
   autoload :FailedError, "#{path}/failed_error"
+  autoload :ModelsSave, "#{path}/models_save"
   autoload :Response, "#{path}/response"
   autoload :Service, "#{path}/service"
+  autoload :SimpleModelsError, "#{path}/simple_models_errors"
 end

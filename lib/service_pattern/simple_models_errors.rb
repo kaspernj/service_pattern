@@ -1,7 +1,7 @@
 class ServicePattern::SimpleModelErrors
   attr_reader :additional_attributes, :errors, :model, :models_inspected
 
-  def initialize(additional_attributes: [], model:)
+  def initialize(model:, additional_attributes: [])
     @additional_attributes = additional_attributes
     @model = model
     @errors = []

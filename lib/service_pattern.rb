@@ -8,5 +8,5 @@ module ServicePattern
   autoload :ModelsSave, "#{path}/models_save"
   autoload :Response, "#{path}/response"
   autoload :Service, "#{path}/service"
-  autoload :SimpleModelsError, "#{path}/simple_models_errors"
+  autoload :SimpleModelErrors, "#{path}/simple_model_errors"
 end

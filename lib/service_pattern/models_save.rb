@@ -1,7 +1,7 @@
 class ServicePattern::ModelsSave < ServicePattern::Service
   attr_reader :models, :simple_model_errors
 
-  def initialize(models:, simple_model_errors: false)
+  def initialize(models:, simple_model_errors: true)
     @models = models
     @simple_model_errors = simple_model_errors
   end

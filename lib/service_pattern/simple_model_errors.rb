@@ -1,4 +1,4 @@
-class ServicePattern::SimpleModelErrors
+class ServicePattern::SimpleModelErrors < ServicePattern::Service
   attr_reader :additional_attributes, :errors, :model, :models_inspected
 
   def initialize(model:, additional_attributes: [])
@@ -10,7 +10,7 @@ class ServicePattern::SimpleModelErrors
 
   def perform
     inspect_model(model)
-    errors
+    succeed!(errors)
   end
 
   def inspect_model(model_to_inspect)

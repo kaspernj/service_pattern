@@ -155,5 +155,33 @@ describe ServicePattern::Service do
       expect { service_class.execute! }
         .to raise_error(ServicePattern::FailedError, "Name can't be blank")
     end
+
+    it "uses simple model errors to raise errors from associated records" do
+      service_class = Class.new(ServicePattern::Service) do
+        def perform
+          task = Task.new(name: "Test task")
+          task.timelogs.build(description: " ")
+
+          save_models_or_fail task
+        end
+      end
+
+      expect { service_class.execute! }
+        .to raise_error(ServicePattern::FailedError, "Description can't be blank")
+    end
+
+    it "disables simple model errors to raise errors from associated records" do
+      service_class = Class.new(ServicePattern::Service) do
+        def perform
+          task = Task.new(name: "Test task")
+          task.timelogs.build(description: " ")
+
+          save_models_or_fail task, simple_model_errors: false
+        end
+      end
+
+      expect { service_class.execute! }
+        .to raise_error(ServicePattern::FailedError, "Timelogs is invalid")
+    end
   end
 end

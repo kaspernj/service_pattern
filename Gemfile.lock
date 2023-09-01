@@ -102,7 +102,7 @@ GEM
     marcel (1.0.2)
     method_source (1.0.0)
     mini_mime (1.1.2)
-    mini_portile2 (2.8.2)
+    mini_portile2 (2.8.4)
     minitest (5.18.1)
     net-imap (0.3.6)
       date
@@ -196,7 +196,7 @@ GEM
       rubocop (~> 0.87)
       rubocop-ast (>= 0.7.1)
     ruby-progressbar (1.11.0)
-    sqlite3 (1.6.3)
+    sqlite3 (1.6.4)
       mini_portile2 (~> 2.8.0)
     string-cases (0.0.4)
     thor (1.2.2)

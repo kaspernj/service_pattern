@@ -227,7 +227,7 @@ GEM
       rubocop-ast (>= 0.7.1)
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
-    sqlite3 (1.6.6)
+    sqlite3 (1.6.7)
       mini_portile2 (~> 2.8.0)
     string-cases (0.0.4)
     stringio (3.0.8)

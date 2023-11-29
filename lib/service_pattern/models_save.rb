@@ -14,10 +14,16 @@ class ServicePattern::ModelsSave < ServicePattern::Service
         next if model.save
 
         if simple_model_errors
-          errors += ServicePattern::SimpleModelErrors.execute!(model: model)
+          model_errors = ServicePattern::SimpleModelErrors.execute!(model: model)
         else
-          errors += models.map(&:errors).map(&:full_messages).flatten
+          model_errors = models.map(&:errors).map(&:full_messages).flatten
         end
+
+        if model_errors.empty?
+          puts "ServicePattern::ModelsSave: Save wasn't successful #{model.class.name} but couldn't find any errors?"
+        end
+
+        errors += model_errors
 
         raise ActiveRecord::Rollback if errors.any?
       end

@@ -23,9 +23,17 @@ class ServicePattern::SimpleModelErrors < ServicePattern::Service
       if attribute_name == :base
         @errors += attribute_errors
       else
-        next if model_to_inspect.attribute_names.exclude?(attribute_name.to_s) && additional_attributes.exclude?(attribute_name)
+        association = model_to_inspect.association(attribute_name) if model_to_inspect._reflections[attribute_name.to_s]
 
         attribute_errors.each do |message|
+          if association
+            if association_has_error?(model_to_inspect, attribute_name, message)
+              next
+            elsif message == "is invalid"
+              next
+            end
+          end
+
           errors << "#{model_to_inspect.class.human_attribute_name(attribute_name)} #{message}"
         end
       end
@@ -35,6 +43,63 @@ class ServicePattern::SimpleModelErrors < ServicePattern::Service
   end
 
 private
+
+  def association_has_error?(model, association_name, error_message)
+    association = model.association(association_name)
+    target = association.target
+    errors = []
+
+    if target.is_a?(ActiveRecord::Base)
+      errors += association_errors_for_model(target)
+    else
+      target&.each do |sub_model|
+        errors += association_errors_for_model(sub_model)
+      end
+    end
+
+    errors.include?(error_message)
+  end
+
+  def association_errors_for_model(model)
+    errors = []
+    model._reflections.each_key do |association_name|
+      target = model.association(association_name.to_sym).target
+
+      if target.is_a?(ActiveRecord::Base)
+        association_recursive_errors(target, errors) unless models_inspected.include?(target)
+      else
+        target&.each do |sub_model|
+          association_recursive_errors(sub_model, errors) unless models_inspected.include?(target)
+        end
+      end
+    end
+
+    errors
+  end
+
+  def association_recursive_errors(model, errors)
+    model.valid?
+
+    model.errors.messages.each do |attribute_name, attribute_errors|
+      attribute_errors.each do |message|
+        errors << message
+      end
+    end
+
+    model._reflections.each_key do |association_name|
+      target = model.association(association_name.to_sym).target
+
+      if target.is_a?(ActiveRecord::Base)
+        association_recursive_errors(target, errors)
+      else
+        target&.each do |sub_model|
+          association_recursive_errors(sub_model, errors)
+        end
+      end
+    end
+
+    errors
+  end
 
   def collect_errors_from_associations(model_to_scan_reflections_on)
     model_to_scan_reflections_on._reflections.each_key do |association_name|

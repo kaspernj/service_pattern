@@ -13,7 +13,7 @@ class ServicePattern::SimpleModelErrors < ServicePattern::Service
     succeed!(errors)
   end
 
-  def inspect_model(model_to_inspect)
+  def inspect_model(model_to_inspect) # rubocop:disable Metrics/PerceivedComplexity
     return if models_inspected.include?(model_to_inspect)
 
     model_to_inspect.valid? if model_to_inspect.errors.empty? # Generates the errors on the model so we can detect them
@@ -80,7 +80,7 @@ private
   def association_recursive_errors(model, errors)
     model.valid?
 
-    model.errors.messages.each do |attribute_name, attribute_errors|
+    model.errors.messages.each_value do |attribute_errors|
       attribute_errors.each do |message|
         errors << message
       end

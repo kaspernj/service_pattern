@@ -183,5 +183,20 @@ describe ServicePattern::Service do
       expect { service_class.execute! }
         .to raise_error(ServicePattern::FailedError, "Timelogs is invalid")
     end
+
+    it "generates errors for relationships" do
+      service_class = Class.new(ServicePattern::Service) do
+        def perform
+          task = Task.create!(name: "INVALID TASK NAME")
+          timelog = Timelog.new(description: "asd", task: task)
+
+          save_models_or_fail timelog
+          succeed!
+        end
+      end
+
+      expect { service_class.execute! }
+        .to raise_error(ServicePattern::FailedError, "Task has an invalid name")
+    end
   end
 end

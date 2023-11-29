@@ -13,14 +13,14 @@ class ServicePattern::ModelsSave < ServicePattern::Service
       models.each do |model|
         next if model.save
 
-        if simple_model_errors
-          errors += ServicePattern::SimpleModelErrors.execute!(model: model)
-        else
-          errors += models.map(&:errors).map(&:full_messages).flatten
-        end
+        model_errors = []
+        model_errors += ServicePattern::SimpleModelErrors.execute!(model: model) if simple_model_errors
+        model_errors = models.map(&:errors).map(&:full_messages).flatten if model_errors.empty?
 
-        raise ActiveRecord::Rollback if errors.any?
+        errors += model_errors
       end
+
+      raise ActiveRecord::Rollback if errors.any?
     end
 
     fail! errors.uniq if errors.any?

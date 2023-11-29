@@ -46,59 +46,13 @@ private
 
   def association_has_error?(model, association_name, error_message)
     association = model.association(association_name)
-    target = association.target
-    errors = []
+    models = association.target
 
-    if target.is_a?(ActiveRecord::Base)
-      errors += association_errors_for_model(target)
-    else
-      target&.each do |sub_model|
-        errors += association_errors_for_model(sub_model)
-      end
-    end
+    return if models.nil?
 
+    models = [models] unless models.is_a?(Array)
+    errors = ServicePattern::RecursiveErrors.new(models: models, models_inspected: models_inspected.dup).perform
     errors.include?(error_message)
-  end
-
-  def association_errors_for_model(model)
-    errors = []
-    model._reflections.each_key do |association_name|
-      target = model.association(association_name.to_sym).target
-
-      if target.is_a?(ActiveRecord::Base)
-        association_recursive_errors(target, errors) unless models_inspected.include?(target)
-      else
-        target&.each do |sub_model|
-          association_recursive_errors(sub_model, errors) unless models_inspected.include?(target)
-        end
-      end
-    end
-
-    errors
-  end
-
-  def association_recursive_errors(model, errors)
-    model.valid?
-
-    model.errors.messages.each_value do |attribute_errors|
-      attribute_errors.each do |message|
-        errors << message
-      end
-    end
-
-    model._reflections.each_key do |association_name|
-      target = model.association(association_name.to_sym).target
-
-      if target.is_a?(ActiveRecord::Base)
-        association_recursive_errors(target, errors)
-      else
-        target&.each do |sub_model|
-          association_recursive_errors(sub_model, errors)
-        end
-      end
-    end
-
-    errors
   end
 
   def collect_errors_from_associations(model_to_scan_reflections_on)
